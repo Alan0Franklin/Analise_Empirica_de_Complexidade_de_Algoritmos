@@ -16,13 +16,13 @@ int partition(std::vector<int> &vetor, int esquerda, int direita){
 }
 
 // Algoritmo de ordenação Quick Sort (ou Partition Sort).
-void quicksort_implementacao(std::vector<int> &vetor, int esquerda, int direita){
+void quicksort(std::vector<int> &vetor, int esquerda, int direita){
     if (esquerda < direita){
         int i_pivo = partition(vetor, esquerda, direita);
-        quicksort_implementacao(vetor, esquerda, i_pivo - 1);
-        quicksort_implementacao(vetor, i_pivo + 1, direita);
+        quicksort(vetor, esquerda, i_pivo - 1);
+        quicksort(vetor, i_pivo + 1, direita);
     }
 }
 
 // Algoritmo de ordenação Quick Sort adaptado para std::function<void(std::vector<int> &vetor, int tamanho_vetor)>.
-void quicksort(std::vector<int> &vetor, int tamanho_vetor){if (!vetor.empty()){quicksort_implementacao(vetor, 0, tamanho_vetor - 1);}}
+void quicksort(std::vector<int> &vetor, int tamanho_vetor){quicksort(vetor, 0, tamanho_vetor - 1);}

@@ -7,7 +7,7 @@
 int partition(std::vector<int> &vetor, int esquerda, int direita);
 
 // Algoritmo de ordenação Quick Sort (ou Partition Sort).
-void quicksort_implementacao(std::vector<int>& vetor, int esquerda, int direita);
+void quicksort(std::vector<int>& vetor, int esquerda, int direita);
 
 // Algoritmo de ordenação Quick Sort adaptado para std::function<void(std::vector<int> &vetor, int tamanho_vetor)>.
 void quicksort(std::vector<int> &vetor, int tamanho_vetor);

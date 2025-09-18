@@ -9,9 +9,10 @@ OBJ_DIR = obj
 
 # Arquivos fonte e objeto
 EXEC = Analise_Empirica_de_Complexidade_de_Algoritmos.exe
-SRCS = $(wildcard $(SRC_DIR)/*.cpp) main.cpp
-OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(filter $(SRC_DIR)/%.cpp,$(SRCS))) $(OBJ_DIR)/main.o
-#OBJS += $(patsubst %.cpp,$(OBJ_DIR)/%.o,$(filter %.cpp,$(SRCS)))
+SRCS = $(wildcard $(SRC_DIR)/*.cpp)
+OBJS = $(patsubst $(SRC_DIR)/%.cpp,$(OBJ_DIR)/%.o,$(SRCS))
+
+all: $(EXEC)
 
 # Compilação do executável
 $(EXEC): $(OBJS)
@@ -19,20 +20,27 @@ $(EXEC): $(OBJS)
 
 # Criação do diretório obj, se não existir
 $(OBJ_DIR):
-	mkdir $(OBJ_DIR): main.cpp | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
+	if not exist $(OBJ_DIR) mkdir $(OBJ_DIR)
+# para Linux: mkdir -p $(OBJ_DIR)
 
 # Compilação de cada .cpp em .o
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.cpp | $(OBJ_DIR)
 	$(CXX) $(CXXFLAGS) -c $< -o $@
 
-$(OBJ_DIR)/%.o: %.cpp | $(OBJ_DIR)
-	$(CXX) $(CXXFLAGS) -c $< -o $@
-
 # Limpeza
-clean:
-	rm -f $(SRC_DIR)/*.o $(EXEC)
+clean: # Para o Linux
+	@echo "Limpando arquivos objeto e executavel..."
+	@rm -f $(OBJ_DIR)/*.o $(EXEC)
 
-clean-windows:
+clean-cmd: # Para o Prompt de Comando (no Windows)
+	@echo "Limpando arquivos objeto e executavel..."
 	@if exist $(OBJ_DIR)\*.o del /Q $(OBJ_DIR)\*.o
 	@if exist $(EXEC) del /Q $(EXEC)
+
+clean-pwsh: # Para o PowerShell (no Windows)
+	@echo "Limpando arquivos objeto e executavel..."
+	@if (Test-Path "$(OBJ_DIR)/*.o") { Remove-Item "$(OBJ_DIR)/*.o" -Force }
+	@if (Test-Path "$(EXEC)") { Remove-Item "$(EXEC)" -Force }
+
+# .PHONY declara que um alvo não é um arquivo real — é apenas um nome de comando.
+.PHONY: all clean clean-cmd clean-pwsh

@@ -1,6 +1,7 @@
 #include <iostream>
+#include <fstream>
+#include <sys/stat.h>
 #include <algorithm>
-#include <vector>
 #include <random>
 #include <limits>
 #include <chrono>
@@ -61,20 +62,56 @@ void imprimir_vetor(vector<int> &vetor, int tamanho_vetor){
     cout << '}' << endl;
 }
 
-// Função para comparar os algoritmos de ordenação em relação à um vetor dado.
-long long cronometro_de_funcao(vector<int> &vetor, int tamanho_vetor, std::function<void(std::vector<int> &vetor, int tamanho_vetor)> func){
-    vector<int> v = vetor;
-    auto start = high_resolution_clock::now();
-    func(v, tamanho_vetor);
-    auto end = high_resolution_clock::now();
-    long long tempo_de_execucao = duration_cast<microseconds>(end - start).count();
-    imprimir_vetor(v, tamanho_vetor);
-    return tempo_de_execucao;
-}
-
 // Função para trocar a posição de dois elementos em um vetor.
 void trocar_de_posicao(vector<int> &vetor, int id1, int id2){
     int hold = vetor[id1];
     vetor[id1] = vetor[id2];
     vetor[id2] = hold;
+}
+
+// Função para cronometrar os tempos de execução de um dado algoritmo.
+long long cronometro_de_funcao(vector<int> &vetor, int tamanho_vetor, function<void(vector<int> &vetor, int tamanho_vetor)> func){
+    vector<int> v = vetor;
+    auto start = high_resolution_clock::now();
+    func(v, tamanho_vetor);
+    auto end = high_resolution_clock::now();
+    long long tempo_de_execucao = duration_cast<microseconds>(end - start).count();
+    return tempo_de_execucao;
+}
+
+// Função para verificar se o arquivo existe.
+bool arquivo_existe(const string &nome_arquivo){
+    struct stat buffer;
+    return (stat(nome_arquivo.c_str(), &buffer) == 0);
+}
+
+// Função para escrever as saídas em um arquivo.
+bool registrar_no_arquivo(const string &nome_arquivo, int n, vector<string> &nome_algoritmos, vector<long long> &tempos_de_exec){
+    bool arquivo_existia = arquivo_existe(nome_arquivo); // Verifica se o arquivo já existia antes
+    ofstream arquivo(nome_arquivo, ios::app); // Abre o arquivo para escrita. Se não existir, será criado.
+
+    if (!arquivo.is_open()) { // Verifica se o arquivo foi aberto corretamente.
+        cerr << "Erro ao abrir ou criar o arquivo!" << endl;
+        return false;
+    }
+
+    int qnt_algoritmos = nome_algoritmos.size();
+    if (!arquivo_existia){ // Se o arquivo não existia antes, acabou de ser criado: escreva o cabeçalho.
+        arquivo << "n";
+        for (int i = 0; i < qnt_algoritmos; i++){
+            arquivo << ";" << nome_algoritmos[i];
+        }
+        arquivo << "\n";
+    }
+
+    arquivo << n;
+    for (int i = 0; i < qnt_algoritmos; i++){ // Escrevendo dados no final do arquivo.
+        arquivo << ";" << tempos_de_exec[i];
+    }
+    arquivo << "\n";
+
+    arquivo.close(); // Fecha o arquivo.
+
+    cout << "Dados adicionados ao arquivo " << nome_arquivo << " com sucesso!" << endl;
+    return true;
 }

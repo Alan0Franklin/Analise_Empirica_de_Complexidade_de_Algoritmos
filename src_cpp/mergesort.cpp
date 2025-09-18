@@ -32,14 +32,14 @@ void merge(std::vector<int> &vetor, int esquerda, int meio, int direita){
 }
 
 // Algoritmo de ordenação Merge Sort.
-void mergesort_implementacao(std::vector<int> &vetor, int esquerda, int direita){
+void mergesort(std::vector<int> &vetor, int esquerda, int direita){
     if (esquerda < direita){
         int meio = esquerda + (direita - esquerda) / 2;
-        mergesort_implementacao(vetor, esquerda, meio);
-        mergesort_implementacao(vetor, meio + 1, direita);
+        mergesort(vetor, esquerda, meio);
+        mergesort(vetor, meio + 1, direita);
         merge(vetor, esquerda, meio, direita);
     }
 }
 
 // Algoritmo de ordenação Merge Sort adaptado para std::function<void(std::vector<int> &vetor, int tamanho_vetor)>.
-void mergesort(std::vector<int> &vetor, int tamanho_vetor){if (!vetor.empty()){mergesort_implementacao(vetor, 0, tamanho_vetor - 1);}}
+void mergesort(std::vector<int> &vetor, int tamanho_vetor){mergesort(vetor, 0, tamanho_vetor - 1);}
