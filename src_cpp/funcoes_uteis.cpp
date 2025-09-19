@@ -75,7 +75,7 @@ long long cronometro_de_funcao(vector<int> &vetor, int tamanho_vetor, function<v
     auto start = high_resolution_clock::now();
     func(v, tamanho_vetor);
     auto end = high_resolution_clock::now();
-    long long tempo_de_execucao = duration_cast<microseconds>(end - start).count();
+    long long tempo_de_execucao = duration_cast<nanoseconds>(end - start).count();
     return tempo_de_execucao;
 }
 
@@ -114,4 +114,5 @@ bool registrar_no_arquivo(const string &nome_arquivo, int n, vector<string> &nom
 
     cout << "Dados adicionados ao arquivo " << nome_arquivo << " com sucesso!" << endl;
     return true;
+
 }
