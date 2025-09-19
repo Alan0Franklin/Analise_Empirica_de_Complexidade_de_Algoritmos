@@ -7,4 +7,4 @@ bool busca_sequencial(std::vector<int> &vetor, int valor_alvo, int tamanho_vetor
 }
 
 // Algoritmo de Busca Sequencial adaptado para std::function<void(std::vector<int> &vetor, int tamanho_vetor)>.
-void busca_sequencial(std::vector<int> &vetor, int tamanho_vetor){busca_sequencial(vetor, tamanho_vetor, tamanho_vetor);}
+void busca_sequencial(std::vector<int> &vetor, int tamanho_vetor){busca_sequencial(vetor, tamanho_vetor/3, tamanho_vetor);}

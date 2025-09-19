@@ -39,15 +39,15 @@ int ler_inteiro(string mensagem_erro, int lim_inf, int lim_sup){
 }
 
 // Função para criar o vetor à ser analisado.
-vector<int> criador_vetor(){
-    cout << "> Digite o tamanho do vetor que deseja: ";
-    int tamanho_vetor = ler_inteiro("> Digite o numero do tamanho que voce deseja que o vetor tenha: ", 0, 0);
+vector<int> criador_vetor(int tamanho_vetor){
+    //cout << "> Digite o tamanho do vetor que deseja: ";
+    //int tamanho_vetor = ler_inteiro("> Digite o numero do tamanho que voce deseja que o vetor tenha: ", 0, 0);
     vector<int> vetor(tamanho_vetor);   // vetor à ser criado.
     random_device rd;  // gerador de seed aleatória. Em alguns sistemas (especialmente Windows com algumas versões de compiladores), não é realmente aleatório.
     mt19937 gen(rd()); // gerador Mersenne Twister.
     for (int i = 0; i < tamanho_vetor; i++){vetor[i] = i + 1;}
     shuffle(vetor.begin(), vetor.end(), gen);
-    cout << "=== // ===" << endl;
+    //cout << "=== // ===" << endl;
     return vetor;
 }
 
@@ -112,7 +112,6 @@ bool registrar_no_arquivo(const string &nome_arquivo, int n, vector<string> &nom
 
     arquivo.close(); // Fecha o arquivo.
 
-    cout << "Dados adicionados ao arquivo " << nome_arquivo << " com sucesso!" << endl;
+    //cout << "Dados adicionados ao arquivo " << nome_arquivo << " com sucesso!" << endl;
     return true;
-
 }

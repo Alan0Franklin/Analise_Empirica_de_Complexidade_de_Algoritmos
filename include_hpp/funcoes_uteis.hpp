@@ -9,7 +9,7 @@
 int ler_inteiro(std::string mensagem_erro, int lim_inf, int lim_sup);
 
 // Função para criar o vetor à ser analisado.
-std::vector<int> criador_vetor();
+std::vector<int> criador_vetor(int tamanho_vetor);
 
 // Função para imprimir os elementos dos vetores no terminal.
 void imprimir_vetor(std::vector<int> &vetor, int tamanho_vetor);

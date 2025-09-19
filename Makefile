@@ -20,7 +20,7 @@ $(EXEC): $(OBJS)
 
 # Criação do diretório obj, se não existir
 $(OBJ_DIR):
-	if not exist $(OBJ_DIR) mkdir $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)
 # para Linux: mkdir -p $(OBJ_DIR)
 
 # Compilação de cada .cpp em .o
